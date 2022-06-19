@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package safe_entry;
+
+//python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. safe_entry.proto
+
+// The service definition
+service SafeEntry {
+    // Login and Logout of the server
+    rpc Login(LoginRequest) returns (LoginResponse) {}
+    rpc Logout(LoginRequest) returns (LoginResponse) {}
+
+    // Check if user has notification message(s) for possible exposure of covid
+    rpc NotificationCheck(NRIC) returns (NotificationListResponse) {}
+    // User's open stream to check for live notifications from a separate thread
+    rpc SubscribeNotification(NRIC) returns (stream NotificationResponse) {}
+    // Check user's latest SafeEntry record check in/out status
+    rpc CheckForStatus(NRIC) returns (CheckResponse) {}
+
+    // Single check in/out
+    rpc SingleCheckIn(CheckRequest) returns (CheckResponse) {}
+    rpc SingleCheckOut(CheckRequest) returns (CheckResponse) {}
+
+    // Group check in/out
+    rpc GroupCheckIn(GroupCheckRequest) returns (CheckResponse) {}
+    rpc GroupCheckOut(CheckRequest) returns (CheckResponse) {}
+
+    // List user's history date, location and check in/out time
+    rpc ListHistory(HistoryRequest) returns (HistoryListResponse) {}
+        
+    /* Special remote access
+       MOH officers able to declare location has been visited by a COVID-19 case.
+       Able to set the date, time and location of exposure of covid case.
+       This function will able record and sent a notification to possible affected users
+       based on SafeEntry records */
+    rpc NotifyCovidCase(NotificationRequest) returns (Empty) {}
+}
+
+// Status to be returned to client
+enum Status {
+    SUCCESS = 0; // already checked out
+    FAILURE = 1;
+    ERROR = 2;
+    SFAILURE = 3; // Single failure for not checking out
+    GFAILURE = 4; // Group failure for not checking out
+}
+
+// Incoming request from clients and responses to be returned by API service
+message User {
+    string name = 1;
+    string nric = 2;
+}
+
+message NRIC {
+    string nric = 1;
+}
+
+message HistoryRequest {
+    string nric = 1;
+}
+
+message LoginRequest {
+    string nric = 1;
+}
+
+message LoginResponse {
+    Status status = 1;
+}
+
+message HistoryResponse{
+    string date = 1;
+    string location = 2;
+    string checkin_time = 3;
+    string checkout_time = 4;
+}
+
+message HistoryListResponse {
+    repeated HistoryResponse historyListResponse = 1;
+}
+
+message CheckRequest {
+    User user = 1;
+    string date = 2;
+    string location = 3;
+    string checkin_time = 4;
+    string checkout_time = 5;
+}
+
+message CheckResponse {
+    Status status = 1;
+}
+
+message GroupCheckRequest {
+    repeated CheckRequest checkRequest = 1;
+    repeated NRIC nric = 2;
+}
+
+message Empty {}
+
+message NotificationStatus {
+    Status status = 1;
+}
+
+message NotificationResponse {
+    string message = 1;
+}
+
+message NotificationListResponse {
+    repeated string message = 1;
+}
+
+message NotificationRequest {
+    string date = 1;
+    string time = 2;
+    string location = 3;
+}
