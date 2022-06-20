@@ -42,6 +42,11 @@ class SafeEntryStub(object):
                 request_serializer=safe__entry__pb2.NRIC.SerializeToString,
                 response_deserializer=safe__entry__pb2.CheckResponse.FromString,
                 )
+        self.CheckForGroupStatus = channel.unary_unary(
+                '/safe_entry.SafeEntry/CheckForGroupStatus',
+                request_serializer=safe__entry__pb2.NRICList.SerializeToString,
+                response_deserializer=safe__entry__pb2.GroupCheckResponse.FromString,
+                )
         self.SingleCheckIn = channel.unary_unary(
                 '/safe_entry.SafeEntry/SingleCheckIn',
                 request_serializer=safe__entry__pb2.CheckRequest.SerializeToString,
@@ -109,6 +114,13 @@ class SafeEntryServicer(object):
 
     def CheckForStatus(self, request, context):
         """Check user's latest SafeEntry record check in/out status
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CheckForGroupStatus(self, request, context):
+        """Check for groups' latest SafeEntry record check in statuses
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -185,6 +197,11 @@ def add_SafeEntryServicer_to_server(servicer, server):
                     servicer.CheckForStatus,
                     request_deserializer=safe__entry__pb2.NRIC.FromString,
                     response_serializer=safe__entry__pb2.CheckResponse.SerializeToString,
+            ),
+            'CheckForGroupStatus': grpc.unary_unary_rpc_method_handler(
+                    servicer.CheckForGroupStatus,
+                    request_deserializer=safe__entry__pb2.NRICList.FromString,
+                    response_serializer=safe__entry__pb2.GroupCheckResponse.SerializeToString,
             ),
             'SingleCheckIn': grpc.unary_unary_rpc_method_handler(
                     servicer.SingleCheckIn,
@@ -311,6 +328,23 @@ class SafeEntry(object):
         return grpc.experimental.unary_unary(request, target, '/safe_entry.SafeEntry/CheckForStatus',
             safe__entry__pb2.NRIC.SerializeToString,
             safe__entry__pb2.CheckResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CheckForGroupStatus(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/safe_entry.SafeEntry/CheckForGroupStatus',
+            safe__entry__pb2.NRICList.SerializeToString,
+            safe__entry__pb2.GroupCheckResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

@@ -1,8 +1,32 @@
 {
-    "user_details": {
-        
-    },
+    "user_details": {},
     "user_history": {
+        "1": [
+            {
+                "date": "21/06/2022",
+                "location": "AMK",
+                "checkin_time": "02:15AM",
+                "checkout_time": "",
+                "group": true,
+                "grouping": [
+                    "1",
+                    "2"
+                ]
+            }
+        ],
+        "2": [
+            {
+                "date": "21/06/2022",
+                "location": "AMK",
+                "checkin_time": "02:15AM",
+                "checkout_time": "",
+                "group": true,
+                "grouping": [
+                    "1",
+                    "2"
+                ]
+            }
+        ]
     },
     "covid_history": []
 }

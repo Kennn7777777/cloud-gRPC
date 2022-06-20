@@ -14,9 +14,12 @@ service SafeEntry {
     rpc NotificationCheck(NRIC) returns (NotificationListResponse) {}
     // User's open stream to check for live notifications from a separate thread
     rpc SubscribeNotification(NRIC) returns (stream NotificationResponse) {}
+    
     // Check user's latest SafeEntry record check in/out status
     rpc CheckForStatus(NRIC) returns (CheckResponse) {}
-
+    // Check for groups' latest SafeEntry record check in statuses
+    rpc CheckForGroupStatus(NRICList) returns (GroupCheckResponse) {}
+    
     // Single check in/out
     rpc SingleCheckIn(CheckRequest) returns (CheckResponse) {}
     rpc SingleCheckOut(CheckRequest) returns (CheckResponse) {}
@@ -53,6 +56,10 @@ message User {
 
 message NRIC {
     string nric = 1;
+}
+
+message NRICList {
+    repeated NRIC nric = 1;
 }
 
 message HistoryRequest {
@@ -92,6 +99,11 @@ message CheckResponse {
 
 message GroupCheckRequest {
     repeated CheckRequest checkRequest = 1;
+    repeated NRIC nric = 2;
+}
+
+message GroupCheckResponse {
+    Status status = 1;
     repeated NRIC nric = 2;
 }
 

@@ -1,6 +1,6 @@
 from __future__ import print_function
 from wsgiref.handlers import format_date_time
-import grpc
+
 import threading
 
 import logging
@@ -107,61 +107,57 @@ class Client(object):
 
         # if previous location was not check out yet for Group
         elif response.status == se_pb2.Status.GFAILURE:
-            print("Single check in unsuccessful...Please do Group check out for previous location first!\n")
+            print("Single check out unsuccessful...Please do Group check out for previous location first!\n")
         # if user is not check in to any location yet
         elif response.status == se_pb2.Status.SUCCESS:
-            print("Single Check out unsuccessful...You have not check in to any location yet....\n")
+            print("Single check out unsuccessful...You have not check in to any location yet....\n")
         else:
             print("Some error has occur...Please try again...\n")
      
     def GroupCheckIn(self):
-        # check if user has not check out from previous (single/group) location
-        request = se_pb2.NRIC(nric=self.nric)
-        response = self.stub.CheckForStatus(request)
+        arr = []
+        nricList = []
+        count = 0
+        # do not allow the user to type negative or 1 number
+        while count <= 1:
+            count = int(input("Enter how many members(including youself >1): "))
+        
+        # convert date and time formatting
+        date = dt.datetime.now().strftime(utils.format_date)
+        checkin_time = dt.datetime.now().strftime(utils.format_time)
+        # checkin_time = input("Enter checkin time: ")
+        # date = input("Enter date: ")
+        location = input("Enter location: ")
 
-        # if previous location was already check out, do a new check in for new location
+        # loop through the number of family members for their name and NRIC
+        # person 1 should be yourself
+        for i in range(count):
+            name = input(f"Enter name for person {i+1}: ")
+            nric = input(f"Enter NRIC for person {i+1}: ")         
+            arr.append(se_pb2.CheckRequest(user=se_pb2.User(name=name,nric=nric),
+            date=date,
+            location=location,
+            checkin_time=checkin_time))
+            nricList.append(se_pb2.NRIC(nric=nric))
+        
+        request = se_pb2.NRICList(nric=nricList)
+        response = self.stub.CheckForGroupStatus(request)
+
         if response.status == se_pb2.Status.SUCCESS:
-            arr = []
-            nricList = []
-            count = 0
-            # do not allow the user to type negative or 1 number
-            while count <= 1:
-                count = int(input("Enter how many members(including youself >1): "))
-            
-            # convert date and time formatting
-            date = dt.datetime.now().strftime(utils.format_date)
-            checkin_time = dt.datetime.now().strftime(utils.format_time)
-            # checkin_time = input("Enter checkin time: ")
-            # date = input("Enter date: ")
-            location = input("Enter location: ")
-
-            # loop through the number of family members to check in
-            # person 1 should be yourself
-            for i in range(count):
-                name = input(f"Enter name for person {i+1}: ")
-                nric = input(f"Enter NRIC for person {i+1}:\n")         
-                arr.append(se_pb2.CheckRequest(user=se_pb2.User(name=name,nric=nric),
-                date=date,
-                location=location,
-                checkin_time=checkin_time))
-                nricList.append(se_pb2.NRIC(nric=nric))
-            
             # send request for group check in
-            response = self.stub.GroupCheckIn(se_pb2.GroupCheckRequest(checkRequest=arr,nric=nricList))
-            if response.status == se_pb2.Status.SUCCESS:
+            response1 = self.stub.GroupCheckIn(se_pb2.GroupCheckRequest(checkRequest=arr,nric=nricList))
+            if response1.status == se_pb2.Status.SUCCESS:
                 print("Group Check in successfully!\n")
             else:
                 print("Group Check in unsuccessful...\n")
-
-        # if previous location was not check out yet for Single
-        elif response.status == se_pb2.Status.SFAILURE:
-            print("Group Check in unsuccessful...Please do single check out for previous location first!\n")
-        # if previous location was not check out yet for Group
-        elif response.status == se_pb2.Status.GFAILURE:
-            print("Group Check in unsuccessful...Please do group check out for previous location first!\n")
+        elif response.status == se_pb2.Status.FAILURE:
+            converted_list = [str(element.nric) for element in response.nric]
+            nric_list = ",".join(converted_list)
+    
+            print("Group Check in unsuccessful...NRIC {} to check out for previous location first!\n".format(nric_list))
         else:
             print("Some error has occur...Please try again...\n")
-
+ 
     def GroupCheckOut(self):
         # check if user has not check in from previous (single/group) location
         request = se_pb2.NRIC(nric=self.nric)
@@ -169,7 +165,8 @@ class Client(object):
 
         # if previous location was not check out yet for Group
         if response.status == se_pb2.Status.GFAILURE:
-            checkout_time = input("Enter checkout time: ")
+            #checkout_time = input("Enter checkout time: ")
+            checkout_time = dt.datetime.now().strftime(utils.format_time)
 
             # send request for group check out
             request = se_pb2.CheckRequest(user=se_pb2.User(nric=self.nric),
@@ -210,7 +207,7 @@ class Client(object):
             print("3. Group check in")
             print("4. Group check out")
             print("5. List history")
-            print("6. Declare covid notification(MOH)")
+            print("6. Declare covid notification(MOH Officer)")
             print("7. Logout")
 
             userChoice = int(input("Select an option:"))
@@ -244,11 +241,7 @@ class Client(object):
                 date = input("Enter date(DD/MM/YYYY): ")
                 time = input("Enter time(HH:MM(AM/PM)): ")
                 location = input("Enter location: ")
-                #date = dt.datetime.now().strftime("%d/%m/%Y")
-                #time = dt.datetime.now().strftime("%I:%M%p")
-                #self.stub.NotifyCovidCase(se_pb2.NotificationRequest(date=date, time=time, location=location))
-                # self.stub.NotifyCovidCase(se_pb2.NotificationRequest(date="03/06/2022", time="15:10:3", location="AMK"))
-                # self.stub.NotifyCovidCase(se_pb2.NotificationRequest(date="12/06/2022", time="03:10PM", location="AMK"))
+                
                 self.stub.NotifyCovidCase(se_pb2.NotificationRequest(date=date, time=time, location=location))
             elif userChoice == 7:
                 self.Logout()

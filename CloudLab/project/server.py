@@ -2,9 +2,9 @@ from concurrent import futures
 
 import logging
 
-import grpc
 from concurrent import futures
 
+import grpc
 import safe_entry_pb2 as se_pb2
 import safe_entry_pb2_grpc as se_pb2_grpc
 
@@ -68,7 +68,7 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
 
     # Check user's latest SafeEntry record check in/out status
     def CheckForStatus(self, request, context):
-         with open(utils.filename, "r+") as file:
+         with open(utils.filename, "r") as file:
             data = json.load(file)
 
             if request.nric in data["user_history"]:
@@ -80,6 +80,23 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
                         return se_pb2.CheckResponse(status=se_pb2.Status.SFAILURE)
 
             return se_pb2.CheckResponse(status=se_pb2.Status.SUCCESS)
+
+    # Check for groups' latest SafeEntry record check in statuses
+    def CheckForGroupStatus(self, request, context):
+        with open(utils.filename, "r") as file:
+            data = json.load(file)
+            arr = []
+
+            # loop through the list of nric and check if any of the user has already been checked out
+            for req in request.nric:
+                if req.nric in data["user_history"]:
+                    if data["user_history"][req.nric][-1]["checkout_time"] == "":
+                        arr.append(se_pb2.NRIC(nric=req.nric))
+ 
+            if arr:
+                return se_pb2.GroupCheckResponse(status=se_pb2.Status.FAILURE,nric=arr)
+                            
+            return se_pb2.GroupCheckResponse(status=se_pb2.Status.SUCCESS)
 
     # Single check in
     def SingleCheckIn(self, request, context):
@@ -174,7 +191,7 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
         
         # calculate the end date <D14> for possible exposure to covid
         endDate = visitDate.date() + dt.timedelta(days=14)
-        endDate = endDate.strftime("%d/%m/%Y")
+        endDate = endDate.strftime(utils.format_date)
         
         # calculate the past 14 days date
         currDate = dt.datetime.now().date()
