@@ -22,6 +22,10 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
 
     # Login to the server
     def Login(self, request, context):
+        # check if nric has already login
+        if request.nric in self.clients.getClientIDList():
+            return se_pb2.LoginResponse(status=se_pb2.Status.ERROR)
+
         self.clients.addClient(request.nric, context)
         print("List of clients: ", self.clients.getClientIDList())
             
@@ -255,7 +259,7 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
 
     def LoadJSONFile(self, request, context):
         utils.filename = request.filename + ".json"
-        print(utils.filename)
+        print("Loaded {} file successfully...".format(utils.filename))
 
         return se_pb2.CheckResponse(status=se_pb2.Status.SUCCESS)
 

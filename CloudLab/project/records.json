@@ -1,25 +1,13 @@
 {
     "user_details": {},
     "user_history": {
-        "user1": [
-            {
-                "date": "22/06/2022",
-                "location": "SIT",
-                "checkin_time": "12:32AM",
-                "checkout_time": "",
-                "group": true,
-                "grouping": [
-                    "user1",
-                    "user2"
-                ]
-            }
-        ],
+        "user1": [],
         "user2": [
             {
                 "date": "22/06/2022",
                 "location": "SIT",
                 "checkin_time": "12:32AM",
-                "checkout_time": "",
+                "checkout_time": "02:36AM",
                 "group": true,
                 "grouping": [
                     "user1",
@@ -28,5 +16,6 @@
             }
         ]
     },
-    "covid_history": []
+    "covid_history": [
+    ]
 }

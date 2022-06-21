@@ -1,0 +1,94 @@
+{
+    "user_details": {},
+    "user_history": {
+        "user1": [
+            {
+                "date": "01/06/2022",
+                "location": "SIT",
+                "checkin_time": "10:00AM",
+                "checkout_time": "12:00PM",
+                "exposure": true,
+                "end_date": "15/06/2022"
+            },
+            {
+                "date": "13/06/2022",
+                "location": "SIT",
+                "checkin_time": "10:30AM",
+                "checkout_time": "12:00PM",
+                "exposure": true,
+                "end_date": "27/06/2022"
+            },
+            {
+                "date": "14/06/2022",
+                "location": "Yishun",
+                "checkin_time": "04:30PM",
+                "checkout_time": "06:30PM",
+                "group": true,
+                "grouping": [
+                    "user1",
+                    "user2"
+                ]
+            },
+            {
+                "date": "14/06/2022",
+                "location": "Yishun",
+                "checkin_time": "07:00PM",
+                "checkout_time": "09:30PM"
+            }
+        ],
+        "user2": [
+            {
+                "date": "13/06/2022",
+                "location": "SIT",
+                "checkin_time": "10:30AM",
+                "checkout_time": "12:00PM",
+                "exposure": true,
+                "end_date": "27/06/2022"
+            },
+            {
+                "date": "14/06/2022",
+                "location": "Yishun",
+                "checkin_time": "04:30PM",
+                "checkout_time": "06:30PM",
+                "group": true,
+                "grouping": [
+                    "user1",
+                    "user2"
+                ]
+            }
+        ],
+        "user3": [
+            {
+                "date": "13/06/2022",
+                "location": "AMK",
+                "checkin_time": "10:30AM",
+                "checkout_time": "12:00PM",
+                "exposure": true,
+                "end_date": "27/06/2022"
+            },
+            {
+                "date": "17/06/2022",
+                "location": "AMK",
+                "checkin_time": "11:00AM",
+                "checkout_time": "12:00PM"
+            }
+        ]
+    },
+    "covid_history": [
+        {
+            "date": "13/06/2022",
+            "location": "SIT",
+            "time": "10:50AM"
+        },
+        {
+            "date": "13/06/2022",
+            "location": "AMK",
+            "time": "11:35AM"
+        },
+        {
+            "date": "01/06/2022",
+            "location": "SIT",
+            "time": "10:30AM"
+        }
+    ]
+}

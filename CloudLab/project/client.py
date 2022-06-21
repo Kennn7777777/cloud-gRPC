@@ -26,6 +26,8 @@ class Client(object):
         if response:
             if response.status == se_pb2.Status.SUCCESS:
                 print("Login successfully!\n")
+            elif response.status == se_pb2.Status.ERROR:
+                print("Login fail...already login from another client...\n")
             else:
                 print("Login fail...\n")
         else:
@@ -182,7 +184,7 @@ class Client(object):
             print("Group Check out unsuccessful...Please do single check out for previous location first!\n")
         # if user is not check in to any location yet
         elif response.status == se_pb2.Status.SUCCESS:
-            print("Group Check out unsuccessful...You have not check in any location yet....")
+            print("Group Check out unsuccessful...You have not check in any location yet....\n")
         else:
             print("Some error has occur...Please try again...\n")
 
@@ -255,6 +257,7 @@ class Client(object):
                 date = input("Enter date(DD/MM/YYYY): ")
                 time = input("Enter time(HH:MM(AM/PM)): ")
                 location = input("Enter location: ")
+                print("\n")
                 
                 self.stub.NotifyCovidCase(se_pb2.NotificationRequest(date=date, time=time, location=location))
             elif userChoice == 7:
@@ -267,8 +270,9 @@ class Client(object):
 if __name__ == '__main__':
     #logging.basicConfig()
     # run()
-    
-    utils.mode = int(input("Enter mode(normal=0, test=1): "))
+    #TODO
+    utils.mode = 1
+    #utils.mode = int(input("Enter mode(normal=0, test=1): "))
     nric = None
     while nric is None:
         nric = input("Enter your NRIC: ")
