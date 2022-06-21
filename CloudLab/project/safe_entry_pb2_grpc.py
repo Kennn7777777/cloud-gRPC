@@ -77,6 +77,11 @@ class SafeEntryStub(object):
                 request_serializer=safe__entry__pb2.NotificationRequest.SerializeToString,
                 response_deserializer=safe__entry__pb2.Empty.FromString,
                 )
+        self.LoadJSONFile = channel.unary_unary(
+                '/safe_entry.SafeEntry/LoadJSONFile',
+                request_serializer=safe__entry__pb2.Filename.SerializeToString,
+                response_deserializer=safe__entry__pb2.CheckResponse.FromString,
+                )
 
 
 class SafeEntryServicer(object):
@@ -170,6 +175,13 @@ class SafeEntryServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def LoadJSONFile(self, request, context):
+        """For testing purposes to edit json file with pre-defined data records
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_SafeEntryServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -232,6 +244,11 @@ def add_SafeEntryServicer_to_server(servicer, server):
                     servicer.NotifyCovidCase,
                     request_deserializer=safe__entry__pb2.NotificationRequest.FromString,
                     response_serializer=safe__entry__pb2.Empty.SerializeToString,
+            ),
+            'LoadJSONFile': grpc.unary_unary_rpc_method_handler(
+                    servicer.LoadJSONFile,
+                    request_deserializer=safe__entry__pb2.Filename.FromString,
+                    response_serializer=safe__entry__pb2.CheckResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -447,5 +464,22 @@ class SafeEntry(object):
         return grpc.experimental.unary_unary(request, target, '/safe_entry.SafeEntry/NotifyCovidCase',
             safe__entry__pb2.NotificationRequest.SerializeToString,
             safe__entry__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def LoadJSONFile(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/safe_entry.SafeEntry/LoadJSONFile',
+            safe__entry__pb2.Filename.SerializeToString,
+            safe__entry__pb2.CheckResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

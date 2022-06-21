@@ -120,7 +120,7 @@ class Client(object):
         count = 0
         # do not allow the user to type negative or 1 number
         while count <= 1:
-            count = int(input("Enter how many members(including youself >1): "))
+            count = int(input("Enter how many family members(including youself >1): "))
         
         # convert date and time formatting
         date = dt.datetime.now().strftime(utils.format_date)
@@ -154,7 +154,7 @@ class Client(object):
             converted_list = [str(element.nric) for element in response.nric]
             nric_list = ",".join(converted_list)
     
-            print("Group Check in unsuccessful...NRIC {} to check out for previous location first!\n".format(nric_list))
+            print("Group Check in unsuccessful...NRIC {} to check out from previous location first!\n".format(nric_list))
         else:
             print("Some error has occur...Please try again...\n")
  
@@ -200,6 +200,18 @@ class Client(object):
         
         sys.exit()
 
+    def LoadJSONFile(self):
+        filename = input("Enter JSON filename: ")
+        response = self.stub.LoadJSONFile(se_pb2.Filename(filename=filename))
+
+        if response:
+            if response.status == se_pb2.Status.SUCCESS:
+                print("Loaded successfully!\n")
+            else:
+                print("Load failed...\n")
+        else:
+            print("Some error has occur...\n")
+
     def Run(self):
         if (self.nric is not None):
             print("1. Single check in")
@@ -209,6 +221,8 @@ class Client(object):
             print("5. List history")
             print("6. Declare covid notification(MOH Officer)")
             print("7. Logout")
+            if utils.mode == 1: 
+                print("8. Enter json filename")
 
             userChoice = int(input("Select an option:"))
 
@@ -245,12 +259,16 @@ class Client(object):
                 self.stub.NotifyCovidCase(se_pb2.NotificationRequest(date=date, time=time, location=location))
             elif userChoice == 7:
                 self.Logout()
+            elif userChoice == 8:
+                self.LoadJSONFile()
         else:
             pass
     
 if __name__ == '__main__':
     #logging.basicConfig()
     # run()
+    
+    utils.mode = int(input("Enter mode(normal=0, test=1): "))
     nric = None
     while nric is None:
         nric = input("Enter your NRIC: ")

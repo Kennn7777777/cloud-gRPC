@@ -37,6 +37,9 @@ service SafeEntry {
        This function will able record and sent a notification to possible affected users
        based on SafeEntry records */
     rpc NotifyCovidCase(NotificationRequest) returns (Empty) {}
+
+    // For testing purposes to edit json file with pre-defined data records
+    rpc LoadJSONFile(Filename) returns (CheckResponse) {}
 }
 
 // Status to be returned to client
@@ -125,4 +128,8 @@ message NotificationRequest {
     string date = 1;
     string time = 2;
     string location = 3;
+}
+
+message Filename {
+    string filename = 1;
 }

@@ -253,6 +253,12 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
                            
         return se_pb2.Empty()
 
+    def LoadJSONFile(self, request, context):
+        utils.filename = request.filename + ".json"
+        print(utils.filename)
+
+        return se_pb2.CheckResponse(status=se_pb2.Status.SUCCESS)
+
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     se_pb2_grpc.add_SafeEntryServicer_to_server(SafeEntry(), server)

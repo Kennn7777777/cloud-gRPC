@@ -1,5 +1,7 @@
 from queue import Queue
 
+mode = 0 # mode 0 = normal, mode 1 = testing
+
 format_date = "%d/%m/%Y"
 format_time = "%I:%M%p"
 format_datetime = "%d/%m/%Y %I:%M%p"

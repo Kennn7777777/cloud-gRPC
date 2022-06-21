@@ -3,7 +3,7 @@
     "user_history": {
         "user1": [
             {
-                "date": "22/06/2022",
+                "date": "aaa",
                 "location": "SIT",
                 "checkin_time": "12:32AM",
                 "checkout_time": "",
@@ -11,19 +11,6 @@
                 "grouping": [
                     "user1",
                     "user2"
-                ]
-            }
-        ],
-        "user2": [
-            {
-                "date": "22/06/2022",
-                "location": "SIT",
-                "checkin_time": "12:32AM",
-                "checkout_time": "",
-                "group": true,
-                "grouping": [
-                    "user1",
-                    "user3"
                 ]
             }
         ]
