@@ -102,7 +102,10 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
             for req in request.nric:
                 if req.nric in data["user_history"]:
                     if data["user_history"][req.nric][-1]["checkout_time"] == "":
-                        arr.append(data["user_details"][req.nric])
+                        if req.nric in data["user_details"]:
+                            arr.append(data["user_details"][req.nric])
+                        else:
+                            arr.append("rando")
  
             if arr:
                 return se_pb2.GroupCheckResponse(status=se_pb2.Status.FAILURE,name=arr)
