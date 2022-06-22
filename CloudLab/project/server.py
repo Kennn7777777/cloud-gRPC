@@ -28,8 +28,13 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
 
         self.clients.addClient(request.nric, context)
         print("List of clients: ", self.clients.getClientIDList())
+
+        name = None
+        with open(utils.filename, "r+") as file:
+            data = json.load(file)
+            name = data["user_details"][request.nric]
             
-        return se_pb2.LoginResponse(status=se_pb2.Status.SUCCESS)
+        return se_pb2.LoginResponse(status=se_pb2.Status.SUCCESS, name=name)
 
     # Logout of the server
     def Logout(self, request, context):

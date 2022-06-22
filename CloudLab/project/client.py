@@ -15,6 +15,7 @@ import safe_entry_pb2_grpc as se_pb2_grpc
 class Client(object):
     def __init__(self, nric):
         self.nric = nric
+        self.name = None
 
         # create a gRPC channel to connect to server
         self.channel = grpc.insecure_channel('localhost:50051')
@@ -25,6 +26,7 @@ class Client(object):
         response = self.stub.Login(se_pb2.LoginRequest(nric=nric))
         if response:
             if response.status == se_pb2.Status.SUCCESS:
+                self.name = response.name
                 print("Login successfully!\n")
             elif response.status == se_pb2.Status.ERROR:
                 print("Login fail...already login from another client...\n")
@@ -53,7 +55,7 @@ class Client(object):
 
         # if previous location was already check out, do a new check in for new location
         if response.status == se_pb2.Status.SUCCESS:
-            name = input("Enter name: ")
+            #name = input("Enter name: ")
             location = input("Enter location: ")
 
             # convert date and time formatting
@@ -63,7 +65,7 @@ class Client(object):
             #checkin_time = input("Enter checkin time: ")
             
             # send request for single check in
-            request1 = se_pb2.CheckRequest(user=se_pb2.User(name=name,nric=self.nric),
+            request1 = se_pb2.CheckRequest(user=se_pb2.User(nric=self.nric),
             date=date,
             location=location,
             checkin_time=checkin_time)
@@ -134,9 +136,9 @@ class Client(object):
         # loop through the number of family members for their name and NRIC
         # person 1 should be yourself
         for i in range(count):
-            name = input(f"Enter name for person {i+1}: ")
+            # name = input(f"Enter name for person {i+1}: ")
             nric = input(f"Enter NRIC for person {i+1}: ")         
-            arr.append(se_pb2.CheckRequest(user=se_pb2.User(name=name,nric=nric),
+            arr.append(se_pb2.CheckRequest(user=se_pb2.User(nric=nric),
             date=date,
             location=location,
             checkin_time=checkin_time))
@@ -216,6 +218,7 @@ class Client(object):
 
     def Run(self):
         if (self.nric is not None):
+            print(f"Welcome {self.name}!")
             print("1. Single check in")
             print("2. Single check out")
             print("3. Group check in")

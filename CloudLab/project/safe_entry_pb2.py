@@ -15,7 +15,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10safe_entry.proto\x12\nsafe_entry\"\"\n\x04User\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\"\x14\n\x04NRIC\x12\x0c\n\x04nric\x18\x01 \x01(\t\"*\n\x08NRICList\x12\x1e\n\x04nric\x18\x01 \x03(\x0b\x32\x10.safe_entry.NRIC\"\x1e\n\x0eHistoryRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"\x1c\n\x0cLoginRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"3\n\rLoginResponse\x12\"\n\x06status\x18\x01 \x01(\x0e\x32\x12.safe_entry.Status\"^\n\x0fHistoryResponse\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x10\n\x08location\x18\x02 \x01(\t\x12\x14\n\x0c\x63heckin_time\x18\x03 \x01(\t\x12\x15\n\rcheckout_time\x18\x04 \x01(\t\"O\n\x13HistoryListResponse\x12\x38\n\x13historyListResponse\x18\x01 \x03(\x0b\x32\x1b.safe_entry.HistoryResponse\"{\n\x0c\x43heckRequest\x12\x1e\n\x04user\x18\x01 \x01(\x0b\x32\x10.safe_entry.User\x12\x0c\n\x04\x64\x61te\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x14\n\x0c\x63heckin_time\x18\x04 \x01(\t\x12\x15\n\rcheckout_time\x18\x05 \x01(\t\"3\n\rCheckResponse\x12\"\n\x06status\x18\x01 \x01(\x0e\x32\x12.safe_entry.Status\"c\n\x11GroupCheckRequest\x12.\n\x0c\x63heckRequest\x18\x01 \x03(\x0b\x32\x18.safe_entry.CheckRequest\x12\x1e\n\x04nric\x18\x02 \x03(\x0b\x32\x10.safe_entry.NRIC\"X\n\x12GroupCheckResponse\x12\"\n\x06status\x18\x01 \x01(\x0e\x32\x12.safe_entry.Status\x12\x1e\n\x04nric\x18\x02 \x03(\x0b\x32\x10.safe_entry.NRIC\"\x07\n\x05\x45mpty\"8\n\x12NotificationStatus\x12\"\n\x06status\x18\x01 \x01(\x0e\x32\x12.safe_entry.Status\"\'\n\x14NotificationResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"+\n\x18NotificationListResponse\x12\x0f\n\x07message\x18\x01 \x03(\t\"C\n\x13NotificationRequest\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0c\n\x04time\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"\x1c\n\x08\x46ilename\x12\x10\n\x08\x66ilename\x18\x01 \x01(\t*I\n\x06Status\x12\x0b\n\x07SUCCESS\x10\x00\x12\x0b\n\x07\x46\x41ILURE\x10\x01\x12\t\n\x05\x45RROR\x10\x02\x12\x0c\n\x08SFAILURE\x10\x03\x12\x0c\n\x08GFAILURE\x10\x04\x32\xbb\x07\n\tSafeEntry\x12>\n\x05Login\x12\x18.safe_entry.LoginRequest\x1a\x19.safe_entry.LoginResponse\"\x00\x12?\n\x06Logout\x12\x18.safe_entry.LoginRequest\x1a\x19.safe_entry.LoginResponse\"\x00\x12M\n\x11NotificationCheck\x12\x10.safe_entry.NRIC\x1a$.safe_entry.NotificationListResponse\"\x00\x12O\n\x15SubscribeNotification\x12\x10.safe_entry.NRIC\x1a .safe_entry.NotificationResponse\"\x00\x30\x01\x12?\n\x0e\x43heckForStatus\x12\x10.safe_entry.NRIC\x1a\x19.safe_entry.CheckResponse\"\x00\x12M\n\x13\x43heckForGroupStatus\x12\x14.safe_entry.NRICList\x1a\x1e.safe_entry.GroupCheckResponse\"\x00\x12\x46\n\rSingleCheckIn\x12\x18.safe_entry.CheckRequest\x1a\x19.safe_entry.CheckResponse\"\x00\x12G\n\x0eSingleCheckOut\x12\x18.safe_entry.CheckRequest\x1a\x19.safe_entry.CheckResponse\"\x00\x12J\n\x0cGroupCheckIn\x12\x1d.safe_entry.GroupCheckRequest\x1a\x19.safe_entry.CheckResponse\"\x00\x12\x46\n\rGroupCheckOut\x12\x18.safe_entry.CheckRequest\x1a\x19.safe_entry.CheckResponse\"\x00\x12L\n\x0bListHistory\x12\x1a.safe_entry.HistoryRequest\x1a\x1f.safe_entry.HistoryListResponse\"\x00\x12G\n\x0fNotifyCovidCase\x12\x1f.safe_entry.NotificationRequest\x1a\x11.safe_entry.Empty\"\x00\x12\x41\n\x0cLoadJSONFile\x12\x14.safe_entry.Filename\x1a\x19.safe_entry.CheckResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10safe_entry.proto\x12\nsafe_entry\"\"\n\x04User\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04nric\x18\x02 \x01(\t\"\x14\n\x04NRIC\x12\x0c\n\x04nric\x18\x01 \x01(\t\"*\n\x08NRICList\x12\x1e\n\x04nric\x18\x01 \x03(\x0b\x32\x10.safe_entry.NRIC\"\x1e\n\x0eHistoryRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"\x1c\n\x0cLoginRequest\x12\x0c\n\x04nric\x18\x01 \x01(\t\"A\n\rLoginResponse\x12\"\n\x06status\x18\x01 \x01(\x0e\x32\x12.safe_entry.Status\x12\x0c\n\x04name\x18\x02 \x01(\t\"^\n\x0fHistoryResponse\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x10\n\x08location\x18\x02 \x01(\t\x12\x14\n\x0c\x63heckin_time\x18\x03 \x01(\t\x12\x15\n\rcheckout_time\x18\x04 \x01(\t\"O\n\x13HistoryListResponse\x12\x38\n\x13historyListResponse\x18\x01 \x03(\x0b\x32\x1b.safe_entry.HistoryResponse\"{\n\x0c\x43heckRequest\x12\x1e\n\x04user\x18\x01 \x01(\x0b\x32\x10.safe_entry.User\x12\x0c\n\x04\x64\x61te\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\x12\x14\n\x0c\x63heckin_time\x18\x04 \x01(\t\x12\x15\n\rcheckout_time\x18\x05 \x01(\t\"3\n\rCheckResponse\x12\"\n\x06status\x18\x01 \x01(\x0e\x32\x12.safe_entry.Status\"c\n\x11GroupCheckRequest\x12.\n\x0c\x63heckRequest\x18\x01 \x03(\x0b\x32\x18.safe_entry.CheckRequest\x12\x1e\n\x04nric\x18\x02 \x03(\x0b\x32\x10.safe_entry.NRIC\"X\n\x12GroupCheckResponse\x12\"\n\x06status\x18\x01 \x01(\x0e\x32\x12.safe_entry.Status\x12\x1e\n\x04nric\x18\x02 \x03(\x0b\x32\x10.safe_entry.NRIC\"\x07\n\x05\x45mpty\"8\n\x12NotificationStatus\x12\"\n\x06status\x18\x01 \x01(\x0e\x32\x12.safe_entry.Status\"\'\n\x14NotificationResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"+\n\x18NotificationListResponse\x12\x0f\n\x07message\x18\x01 \x03(\t\"C\n\x13NotificationRequest\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0c\n\x04time\x18\x02 \x01(\t\x12\x10\n\x08location\x18\x03 \x01(\t\"\x1c\n\x08\x46ilename\x12\x10\n\x08\x66ilename\x18\x01 \x01(\t*I\n\x06Status\x12\x0b\n\x07SUCCESS\x10\x00\x12\x0b\n\x07\x46\x41ILURE\x10\x01\x12\t\n\x05\x45RROR\x10\x02\x12\x0c\n\x08SFAILURE\x10\x03\x12\x0c\n\x08GFAILURE\x10\x04\x32\xbb\x07\n\tSafeEntry\x12>\n\x05Login\x12\x18.safe_entry.LoginRequest\x1a\x19.safe_entry.LoginResponse\"\x00\x12?\n\x06Logout\x12\x18.safe_entry.LoginRequest\x1a\x19.safe_entry.LoginResponse\"\x00\x12M\n\x11NotificationCheck\x12\x10.safe_entry.NRIC\x1a$.safe_entry.NotificationListResponse\"\x00\x12O\n\x15SubscribeNotification\x12\x10.safe_entry.NRIC\x1a .safe_entry.NotificationResponse\"\x00\x30\x01\x12?\n\x0e\x43heckForStatus\x12\x10.safe_entry.NRIC\x1a\x19.safe_entry.CheckResponse\"\x00\x12M\n\x13\x43heckForGroupStatus\x12\x14.safe_entry.NRICList\x1a\x1e.safe_entry.GroupCheckResponse\"\x00\x12\x46\n\rSingleCheckIn\x12\x18.safe_entry.CheckRequest\x1a\x19.safe_entry.CheckResponse\"\x00\x12G\n\x0eSingleCheckOut\x12\x18.safe_entry.CheckRequest\x1a\x19.safe_entry.CheckResponse\"\x00\x12J\n\x0cGroupCheckIn\x12\x1d.safe_entry.GroupCheckRequest\x1a\x19.safe_entry.CheckResponse\"\x00\x12\x46\n\rGroupCheckOut\x12\x18.safe_entry.CheckRequest\x1a\x19.safe_entry.CheckResponse\"\x00\x12L\n\x0bListHistory\x12\x1a.safe_entry.HistoryRequest\x1a\x1f.safe_entry.HistoryListResponse\"\x00\x12G\n\x0fNotifyCovidCase\x12\x1f.safe_entry.NotificationRequest\x1a\x11.safe_entry.Empty\"\x00\x12\x41\n\x0cLoadJSONFile\x12\x14.safe_entry.Filename\x1a\x19.safe_entry.CheckResponse\"\x00\x62\x06proto3')
 
 _STATUS = DESCRIPTOR.enum_types_by_name['Status']
 Status = enum_type_wrapper.EnumTypeWrapper(_STATUS)
@@ -174,8 +174,8 @@ _SAFEENTRY = DESCRIPTOR.services_by_name['SafeEntry']
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _STATUS._serialized_start=1047
-  _STATUS._serialized_end=1120
+  _STATUS._serialized_start=1061
+  _STATUS._serialized_end=1134
   _USER._serialized_start=32
   _USER._serialized_end=66
   _NRIC._serialized_start=68
@@ -187,31 +187,31 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _LOGINREQUEST._serialized_start=166
   _LOGINREQUEST._serialized_end=194
   _LOGINRESPONSE._serialized_start=196
-  _LOGINRESPONSE._serialized_end=247
-  _HISTORYRESPONSE._serialized_start=249
-  _HISTORYRESPONSE._serialized_end=343
-  _HISTORYLISTRESPONSE._serialized_start=345
-  _HISTORYLISTRESPONSE._serialized_end=424
-  _CHECKREQUEST._serialized_start=426
-  _CHECKREQUEST._serialized_end=549
-  _CHECKRESPONSE._serialized_start=551
-  _CHECKRESPONSE._serialized_end=602
-  _GROUPCHECKREQUEST._serialized_start=604
-  _GROUPCHECKREQUEST._serialized_end=703
-  _GROUPCHECKRESPONSE._serialized_start=705
-  _GROUPCHECKRESPONSE._serialized_end=793
-  _EMPTY._serialized_start=795
-  _EMPTY._serialized_end=802
-  _NOTIFICATIONSTATUS._serialized_start=804
-  _NOTIFICATIONSTATUS._serialized_end=860
-  _NOTIFICATIONRESPONSE._serialized_start=862
-  _NOTIFICATIONRESPONSE._serialized_end=901
-  _NOTIFICATIONLISTRESPONSE._serialized_start=903
-  _NOTIFICATIONLISTRESPONSE._serialized_end=946
-  _NOTIFICATIONREQUEST._serialized_start=948
-  _NOTIFICATIONREQUEST._serialized_end=1015
-  _FILENAME._serialized_start=1017
-  _FILENAME._serialized_end=1045
-  _SAFEENTRY._serialized_start=1123
-  _SAFEENTRY._serialized_end=2078
+  _LOGINRESPONSE._serialized_end=261
+  _HISTORYRESPONSE._serialized_start=263
+  _HISTORYRESPONSE._serialized_end=357
+  _HISTORYLISTRESPONSE._serialized_start=359
+  _HISTORYLISTRESPONSE._serialized_end=438
+  _CHECKREQUEST._serialized_start=440
+  _CHECKREQUEST._serialized_end=563
+  _CHECKRESPONSE._serialized_start=565
+  _CHECKRESPONSE._serialized_end=616
+  _GROUPCHECKREQUEST._serialized_start=618
+  _GROUPCHECKREQUEST._serialized_end=717
+  _GROUPCHECKRESPONSE._serialized_start=719
+  _GROUPCHECKRESPONSE._serialized_end=807
+  _EMPTY._serialized_start=809
+  _EMPTY._serialized_end=816
+  _NOTIFICATIONSTATUS._serialized_start=818
+  _NOTIFICATIONSTATUS._serialized_end=874
+  _NOTIFICATIONRESPONSE._serialized_start=876
+  _NOTIFICATIONRESPONSE._serialized_end=915
+  _NOTIFICATIONLISTRESPONSE._serialized_start=917
+  _NOTIFICATIONLISTRESPONSE._serialized_end=960
+  _NOTIFICATIONREQUEST._serialized_start=962
+  _NOTIFICATIONREQUEST._serialized_end=1029
+  _FILENAME._serialized_start=1031
+  _FILENAME._serialized_end=1059
+  _SAFEENTRY._serialized_start=1137
+  _SAFEENTRY._serialized_end=2092
 # @@protoc_insertion_point(module_scope)

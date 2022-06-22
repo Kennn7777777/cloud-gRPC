@@ -1,21 +1,49 @@
 {
-    "user_details": {},
+    "user_details": {
+        "user1": "David",
+        "user2": "Ken",
+        "user3": "Zheng Yuan",
+        "user4": "Jun Jie"
+    },
     "user_history": {
-        "user1": [],
-        "user2": [
+        "user1": [
             {
                 "date": "22/06/2022",
-                "location": "SIT",
-                "checkin_time": "12:32AM",
-                "checkout_time": "02:36AM",
+                "location": "1",
+                "checkin_time": "06:00PM",
+                "checkout_time": "06:00PM"
+            },
+            {
+                "date": "22/06/2022",
+                "location": "hun",
+                "checkin_time": "06:00PM",
+                "checkout_time": "06:00PM"
+            },
+            {
+                "date": "22/06/2022",
+                "location": "amk",
+                "checkin_time": "06:01PM",
+                "checkout_time": "",
                 "group": true,
                 "grouping": [
                     "user1",
-                    "user3"
+                    "user2"
+                ]
+            }
+        ],
+        "user2": [
+            {
+                "date": "22/06/2022",
+                "location": "amk",
+                "checkin_time": "06:01PM",
+                "checkout_time": "",
+                "group": true,
+                "grouping": [
+                    "user1",
+                    "user2"
                 ]
             }
         ]
     },
-    "covid_history": [
-    ]
+    "covid_history": []
 }

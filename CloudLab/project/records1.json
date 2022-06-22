@@ -1,5 +1,10 @@
 {
-    "user_details": {},
+    "user_details": {
+        "user1": "David",
+        "user2": "Ken",
+        "user3": "Zheng Yuan",
+        "user4": "Jun Jie"
+    },
     "user_history": {
         "user1": [
             {
