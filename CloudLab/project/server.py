@@ -30,7 +30,11 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
         name = None
         with open(utils.filename, "r+") as file:
             data = json.load(file)
-            name = data["user_details"][request.nric]
+            if request.nric in data["user_details"]:
+                name = data["user_details"][request.nric]
+            else:
+                # random name if nric is not in the records
+                name = "rando"
             
         return se_pb2.LoginResponse(status=se_pb2.Status.SUCCESS, name=name)
 
