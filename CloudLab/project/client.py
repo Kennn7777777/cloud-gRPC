@@ -28,8 +28,6 @@ class Client(object):
             if response.status == se_pb2.Status.SUCCESS:
                 self.name = response.name
                 print("Login successfully!\n")
-            elif response.status == se_pb2.Status.ERROR:
-                print("Login fail...already login from another client...\n")
             else:
                 print("Login fail...\n")
         else:
@@ -155,10 +153,10 @@ class Client(object):
             else:
                 print("Group Check in unsuccessful...\n")
         elif response.status == se_pb2.Status.FAILURE:
-            converted_list = [str(element.nric) for element in response.nric]
-            nric_list = ",".join(converted_list)
+            converted_list = [str(element) for element in response.name]
+            name_list = ",".join(converted_list)
     
-            print("Group Check in unsuccessful...NRIC {} to check out from previous location first!\n".format(nric_list))
+            print("Group Check in unsuccessful...Please ask {} to check out from previous location first!\n".format(name_list))
         else:
             print("Some error has occur...Please try again...\n")
  

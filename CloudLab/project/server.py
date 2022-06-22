@@ -22,12 +22,10 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
 
     # Login to the server
     def Login(self, request, context):
-        # check if nric has already login
-        if request.nric in self.clients.getClientIDList():
-            return se_pb2.LoginResponse(status=se_pb2.Status.ERROR)
-
-        self.clients.addClient(request.nric, context)
-        print("List of clients: ", self.clients.getClientIDList())
+        # check if nric has not login
+        if request.nric not in self.clients.getClientIDList():
+            self.clients.addClient(request.nric, context)
+            print("List of clients: ", self.clients.getClientIDList())
 
         name = None
         with open(utils.filename, "r+") as file:
@@ -100,10 +98,10 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
             for req in request.nric:
                 if req.nric in data["user_history"]:
                     if data["user_history"][req.nric][-1]["checkout_time"] == "":
-                        arr.append(se_pb2.NRIC(nric=req.nric))
+                        arr.append(data["user_details"][req.nric])
  
             if arr:
-                return se_pb2.GroupCheckResponse(status=se_pb2.Status.FAILURE,nric=arr)
+                return se_pb2.GroupCheckResponse(status=se_pb2.Status.FAILURE,name=arr)
                             
             return se_pb2.GroupCheckResponse(status=se_pb2.Status.SUCCESS)
 

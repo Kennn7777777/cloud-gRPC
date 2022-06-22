@@ -108,7 +108,7 @@ message GroupCheckRequest {
 
 message GroupCheckResponse {
     Status status = 1;
-    repeated NRIC nric = 2;
+    repeated string name = 2;
 }
 
 message Empty {}
