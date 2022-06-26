@@ -35,6 +35,7 @@ class Client(object):
                 print("Login successfully!\n")
             else:
                 print("Login fail...\n")
+                sys.exit()
         else:
             print("Some error has occur...\n")
     

@@ -9,6 +9,7 @@ import safe_entry_pb2 as se_pb2
 import safe_entry_pb2_grpc as se_pb2_grpc
 
 import json
+import os
 import datetime as dt
 import utils as utils
 
@@ -26,6 +27,8 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
         if request.nric not in self.clients.getClientIDList():
             self.clients.addClient(request.nric, context)
             print("List of clients: ", self.clients.getClientIDList())
+        else:
+            return se_pb2.LoginResponse(status=se_pb2.Status.FAILURE)
 
         name = None
 
@@ -273,6 +276,10 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
 
     # For testing purposes to load json file with pre-defined data records
     def LoadJSONFile(self, request, context):
+        if not os.path.exists(os.getcwd()+"\\"+request.filename+".json"):
+            print("Load fail...")
+            return se_pb2.CheckResponse(status=se_pb2.Status.FAILURE)
+
         utils.filename = request.filename + ".json"
         print("Loaded {} file successfully...".format(utils.filename))
 
