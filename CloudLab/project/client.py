@@ -225,7 +225,7 @@ class Client(object):
             print("6. Declare covid notification(MOH Officer)")
             print("7. Logout")
             if utils.mode == 1: 
-                print("8. Enter json filename")
+                print("8. Load json file")
 
             userChoice = int(input("Select an option:"))
 

@@ -8,9 +8,22 @@
     "user_history": {
         "user1": [
             {
-                "date": "aaa",
+                "date": "26/06/2022",
                 "location": "SIT",
-                "checkin_time": "12:32AM",
+                "checkin_time": "02:19AM",
+                "checkout_time": "",
+                "group": true,
+                "grouping": [
+                    "user1",
+                    "user2"
+                ]
+            }
+        ],
+        "user2": [
+            {
+                "date": "26/06/2022",
+                "location": "SIT",
+                "checkin_time": "02:19AM",
                 "checkout_time": "",
                 "group": true,
                 "grouping": [

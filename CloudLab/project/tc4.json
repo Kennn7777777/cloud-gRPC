@@ -1,0 +1,19 @@
+{
+    "user_details": {
+        "user1": "David",
+        "user2": "Ken",
+        "user3": "Zheng Yuan",
+        "user4": "Jun Jie"
+    },
+    "user_history": {
+        "user1": [
+            {
+                "date": "26/06/2022",
+                "location": "SIT",
+                "checkin_time": "01:29AM",
+                "checkout_time": ""
+            }
+        ]
+    },
+    "covid_history": []
+}
