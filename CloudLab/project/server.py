@@ -28,12 +28,13 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
             print("List of clients: ", self.clients.getClientIDList())
 
         name = None
+
+        # retrieve user's name and 'rando' name if nric is not in the records
         with open(utils.filename, "r+") as file:
             data = json.load(file)
             if request.nric in data["user_details"]:
                 name = data["user_details"][request.nric]
             else:
-                # random name if nric is not in the records
                 name = "rando"
             
         return se_pb2.LoginResponse(status=se_pb2.Status.SUCCESS, name=name)
@@ -51,7 +52,7 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
         
         with open(utils.filename, "r+") as file:
             data = json.load(file)
-            # check though the user's safeEntry records for the dates that were recorded for possible exposure to covid
+            # check though the user's safeEntry records for the entry that were recorded for possible exposure to covid
             if request.nric in data["user_history"]:
                 for history in data["user_history"][request.nric]:
                     if "exposure" in history:
@@ -82,8 +83,8 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
          with open(utils.filename, "r") as file:
             data = json.load(file)
 
+            # check if latest record from user's history has been already checked out
             if request.nric in data["user_history"]:
-                # check if latest record from user's history has been already checked out
                 if data["user_history"][request.nric][-1]["checkout_time"] == "":
                     if "group" in data["user_history"][request.nric][-1]:
                         return se_pb2.CheckResponse(status=se_pb2.Status.GFAILURE)
@@ -98,7 +99,7 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
             data = json.load(file)
             arr = []
 
-            # loop through the list of nric and check if any of the user has already been checked out
+            # loop through the list of nric and check if any of the user has already been checked out and return name of user who has not
             for req in request.nric:
                 if req.nric in data["user_history"]:
                     if data["user_history"][req.nric][-1]["checkout_time"] == "":
@@ -121,6 +122,7 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
             new_data = {"date":request.date, "location":request.location, 
             "checkin_time":request.checkin_time, "checkout_time":""}
 
+            # if nric is not in the records, create a list and append new data
             if request.user.nric not in data["user_history"]:
                 data["user_history"][request.user.nric] = []
             data["user_history"][request.user.nric].append(new_data)
@@ -156,6 +158,8 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
                 new_data = {"date":user.date, "location":user.location, 
                 "checkin_time":user.checkin_time, "checkout_time":"", "group": True, 
                 "grouping": arr}
+
+                # if nric is not in the records, create a list and append new data
                 if user.user.nric not in data["user_history"]:
                     data["user_history"][user.user.nric] = []
                 data["user_history"][user.user.nric].append(new_data)
@@ -265,8 +269,9 @@ class SafeEntry(se_pb2_grpc.SafeEntryServicer):
             file.seek(0)
             json.dump(data, file, indent = 4)
                            
-        return se_pb2.Empty()
+        return se_pb2.CheckResponse(status=se_pb2.Status.SUCCESS)
 
+    # For testing purposes to load json file with pre-defined data records
     def LoadJSONFile(self, request, context):
         utils.filename = request.filename + ".json"
         print("Loaded {} file successfully...".format(utils.filename))
@@ -283,5 +288,4 @@ def serve():
 
 if __name__ == '__main__':
     print("starting gRPC server...")
-    logging.basicConfig()
     serve()

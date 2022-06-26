@@ -5,7 +5,7 @@
         "user3": "Zheng Yuan",
         "user4": "Jun Jie"
     },
-    "user_history": {
-    },
-    "covid_history": []
+    "user_history": {},
+    "covid_history": [
+    ]
 }

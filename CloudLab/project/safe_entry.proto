@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package safe_entry;
 
-//python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. safe_entry.proto
-
 // The service definition
 service SafeEntry {
     // Login and Logout of the server
@@ -36,15 +34,15 @@ service SafeEntry {
        Able to set the date, time and location of exposure of covid case.
        This function will able record and sent a notification to possible affected users
        based on SafeEntry records */
-    rpc NotifyCovidCase(NotificationRequest) returns (Empty) {}
+    rpc NotifyCovidCase(NotificationRequest) returns (CheckResponse) {}
 
-    // For testing purposes to edit json file with pre-defined data records
+    // For testing purposes to load json file with pre-defined data records
     rpc LoadJSONFile(Filename) returns (CheckResponse) {}
 }
 
-// Status to be returned to client
+// Request status to be returned to client
 enum Status {
-    SUCCESS = 0; // already checked out
+    SUCCESS = 0;
     FAILURE = 1;
     ERROR = 2;
     SFAILURE = 3; // Single failure for not checking out
@@ -110,8 +108,6 @@ message GroupCheckResponse {
     Status status = 1;
     repeated string name = 2;
 }
-
-message Empty {}
 
 message NotificationStatus {
     Status status = 1;

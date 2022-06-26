@@ -1,10 +1,14 @@
 from queue import Queue
 
-mode = 0 # mode 0 = normal, mode 1 = testing
+# mode 0 = normal, mode 1 = testing
+mode = 0
 
+# formatting of date and time
 format_date = "%d/%m/%Y"
 format_time = "%I:%M%p"
 format_datetime = "%d/%m/%Y %I:%M%p"
+
+# load filename of json
 filename = "records.json"
 
 notificationMessage = '''
@@ -19,7 +23,7 @@ and seek medical attention if unwell.
 # A client helper class to add/remove client NRIC and notification messages
 class ClientSingleton(object):
     _instance = None
-    # dictionary to store client notifications
+    # dictionary to store client notifications in a Queue
     _notificationQ = {}
     # list to store client NRIC
     _clientIDList = []
@@ -43,7 +47,6 @@ class ClientSingleton(object):
     # Add notification message in the queue for the client
     def addNotificationQ(self, nric, info):
         if nric in self._clientIDList:
-            #print(self._notificationQ)
             self._notificationQ[nric].put(info)
     
     # Remove notification message in the queue for the client

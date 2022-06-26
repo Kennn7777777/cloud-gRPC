@@ -6,9 +6,7 @@ import safe_entry_pb2 as safe__entry__pb2
 
 
 class SafeEntryStub(object):
-    """python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. safe_entry.proto
-
-    The service definition
+    """The service definition
     """
 
     def __init__(self, channel):
@@ -75,7 +73,7 @@ class SafeEntryStub(object):
         self.NotifyCovidCase = channel.unary_unary(
                 '/safe_entry.SafeEntry/NotifyCovidCase',
                 request_serializer=safe__entry__pb2.NotificationRequest.SerializeToString,
-                response_deserializer=safe__entry__pb2.Empty.FromString,
+                response_deserializer=safe__entry__pb2.CheckResponse.FromString,
                 )
         self.LoadJSONFile = channel.unary_unary(
                 '/safe_entry.SafeEntry/LoadJSONFile',
@@ -85,9 +83,7 @@ class SafeEntryStub(object):
 
 
 class SafeEntryServicer(object):
-    """python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. safe_entry.proto
-
-    The service definition
+    """The service definition
     """
 
     def Login(self, request, context):
@@ -176,7 +172,7 @@ class SafeEntryServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def LoadJSONFile(self, request, context):
-        """For testing purposes to edit json file with pre-defined data records
+        """For testing purposes to load json file with pre-defined data records
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -243,7 +239,7 @@ def add_SafeEntryServicer_to_server(servicer, server):
             'NotifyCovidCase': grpc.unary_unary_rpc_method_handler(
                     servicer.NotifyCovidCase,
                     request_deserializer=safe__entry__pb2.NotificationRequest.FromString,
-                    response_serializer=safe__entry__pb2.Empty.SerializeToString,
+                    response_serializer=safe__entry__pb2.CheckResponse.SerializeToString,
             ),
             'LoadJSONFile': grpc.unary_unary_rpc_method_handler(
                     servicer.LoadJSONFile,
@@ -258,9 +254,7 @@ def add_SafeEntryServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class SafeEntry(object):
-    """python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. safe_entry.proto
-
-    The service definition
+    """The service definition
     """
 
     @staticmethod
@@ -463,7 +457,7 @@ class SafeEntry(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/safe_entry.SafeEntry/NotifyCovidCase',
             safe__entry__pb2.NotificationRequest.SerializeToString,
-            safe__entry__pb2.Empty.FromString,
+            safe__entry__pb2.CheckResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
